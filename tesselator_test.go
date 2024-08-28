@@ -5,8 +5,10 @@
 package glu
 
 import (
-	"github.com/go-gl-legacy/gl"
+	"runtime"
 	"testing"
+
+	"github.com/go-gl-legacy/gl"
 )
 
 type PolygonData struct {
@@ -65,10 +67,15 @@ func TestTesselatorData(t *testing.T) {
 
 	tess.Normal(0, 0, 1)
 
+	pinner := runtime.Pinner{}
+	pinner.Pin(poly)
+	pinner.Pin(tess)
+
 	tess.BeginPolygon(poly)
 	tess.BeginContour()
 
 	for v := 0; v < 4; v += 1 {
+		pinner.Pin(&poly.Vertices[v])
 		tess.Vertex(poly.Vertices[v].Location, &poly.Vertices[v])
 	}
 
@@ -90,6 +97,7 @@ func TestTesselatorData(t *testing.T) {
 	checkPoly(t, poly, 1, expectedTriangles*3, 1, 0, expectedEdges, 0)
 
 	tess.Delete()
+	pinner.Unpin()
 }
 
 func TestTesselatorNil(t *testing.T) {
@@ -133,7 +141,7 @@ func TestTesselatorNil(t *testing.T) {
 	tess.Delete()
 }
 
-func TestTesselatorStar(t *testing.T) {
+func TestTesselatorStart(t *testing.T) {
 	poly := new(PolygonData)
 
 	for _, v := range StarContour {
@@ -151,10 +159,15 @@ func TestTesselatorStar(t *testing.T) {
 
 	tess.Normal(0, 0, 1)
 
+	pinner := runtime.Pinner{}
+	pinner.Pin(poly)
+	pinner.Pin(tess)
+
 	tess.BeginPolygon(poly)
 	tess.BeginContour()
 
 	for v := range poly.Vertices {
+		pinner.Pin(&poly.Vertices[v])
 		tess.Vertex(poly.Vertices[v].Location, &poly.Vertices[v])
 	}
 
@@ -168,6 +181,7 @@ func TestTesselatorStar(t *testing.T) {
 
 	checkPoly(t, poly, 1, expectedTriangles*3, 1, 0, expectedEdges, expectedCombines)
 
+	pinner.Unpin()
 	tess.Delete()
 }
 
