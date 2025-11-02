@@ -1,7 +1,7 @@
-module github.com/go-gl-legacy/glu
+module github.com/caffeine-storm/glu
 
-go 1.14
+go 1.23
 
-require github.com/go-gl-legacy/gl v0.0.0-20150223033340-df25b1fe668d
+toolchain go1.23.0
 
-replace github.com/go-gl-legacy/gl => github.com/caffeine-storm/gl v0.0.0-20240901153421-ffd1b6683995
+require github.com/caffeine-storm/gl v0.0.0-haunted

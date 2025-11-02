@@ -8,7 +8,7 @@ import (
 	"runtime"
 	"testing"
 
-	"github.com/go-gl-legacy/gl"
+	"github.com/caffeine-storm/gl"
 )
 
 type PolygonData struct {

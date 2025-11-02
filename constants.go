@@ -4,7 +4,7 @@
 
 package glu
 
-import "github.com/go-gl-legacy/gl"
+import "github.com/caffeine-storm/gl"
 
 const (
 	// TessCallback

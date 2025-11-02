@@ -19,7 +19,7 @@ import (
 	"reflect"
 	"unsafe"
 
-	"github.com/go-gl-legacy/gl"
+	"github.com/caffeine-storm/gl"
 )
 
 func ptr(v interface{}) unsafe.Pointer {
